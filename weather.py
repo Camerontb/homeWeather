@@ -1,14 +1,18 @@
-
-
 import requests
+from dotenv import load_dotenv
+import os
 import json
 
-url = "https://api.ambientweather.net/v1/devices?apiKey=fa3e087e4b974c109e2f3b4c6186054b7e500b8c672f4d3d9d391ca6a5d4c2d5&applicationKey=67b424b006164a53927fcf7482cfbb52c24c7f91ddb04b95be4d2e2ae7dfed5c"
+# Load environment variables from .env file
+load_dotenv()
 
-payload = {}
-headers = {}
+# Access the API and application keys
+api_key = os.getenv("AMBIENT_WEATHER_API_KEY")
+application_key = os.getenv("AMBIENT_WEATHER_APPLICATION_KEY")
 
-response = requests.request("GET", url, headers=headers, data=payload)
 
-pretty_json = json.dumps(response.json(), indent=4)
-print(pretty_json)
+
+url = f"https://api.ambientweather.net/v1/devices?apiKey={api_key}&applicationKey={application_key}"
+
+response = requests.get(url)
+print(response.text)
